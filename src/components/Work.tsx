@@ -117,7 +117,7 @@ const Work = () => {
             >
               {/* Conditional rendering of section names */}
               {section === "research"
-                ? "Graduate Student Assistant"
+                ? "Research"
                 : section === "fullTime"
                   ? "Full-time"
                   : "Intern"}
