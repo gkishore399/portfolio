@@ -165,7 +165,7 @@ const About = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <Image
-                src="/my.jpeg"
+                src="/my.jpg"
                 alt="My photo"
                 width={300}
                 height={300}
