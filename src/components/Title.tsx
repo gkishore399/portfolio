@@ -128,7 +128,7 @@ const Title = () => {
           <TitleCTA
             title={"Resume"}
             link={
-              "https://drive.google.com/file/d/1YvSl0XT9Oqxfk5nDILR5MHnm-FyRogMV/view?usp=drive_link" // Viewable link to open the resume in the browser
+              "https://drive.google.com/file/d/1GU3l7KbnrjX6aH8YaLiS_W00coi3JWKH/view?usp=sharing" // Viewable link to open the resume in the browser
             }
             icon={"download"}
             styles={"bg-blue-700 text-white"}
