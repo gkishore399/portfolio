@@ -1,6 +1,52 @@
+"use client";
+import { useState } from "react";
 import NavItem from "@/components/elements/NavItem";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    message: "",
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+
+  // Update for correct type in input change handler
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Update for correct form submit event type
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent page reload
+
+    try {
+      const response = await fetch("https://formspree.io/f/xdkondjb", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+
+        // Reload the page after 2 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        alert("Error submitting the form");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className={"sep-border mx-6 px-2 py-16 mt-6"}>
       <div className={"flex flex-col max-w-5xl mx-auto"}>
@@ -14,7 +60,7 @@ const Contact = () => {
         </div>
 
         <div className={"flex gap-5 flex-row"}>
-          <form className={"flex flex-col gap-5 w-2/3"}>
+          <form className={"flex flex-col gap-5 w-2/3"} onSubmit={handleSubmit}>
             <h2 className={"text-3xl font-semibold"}>Let&apos;s Connect</h2>
             <div className={"flex flex-row gap-4"}>
               <div className={"flex flex-col gap-1 w-1/2"}>
@@ -26,9 +72,12 @@ const Contact = () => {
                 </label>
                 <input
                   id={"fullname"}
+                  name={"fullname"} // Added name attribute
                   placeholder={"John Doe"}
                   type={"text"}
                   autoComplete={"name"}
+                  value={formData.fullname} // Bind input value to state
+                  onChange={handleInputChange} // Handle input change
                   className={
                     "border border-gray-300 dark:border-gray-700 rounded-lg p-3 bg-white bg-opacity-60 dark:bg-opacity-20"
                   }
@@ -40,9 +89,12 @@ const Contact = () => {
                 </label>
                 <input
                   id={"email"}
+                  name={"email"} // Added name attribute
                   placeholder={"john.doe@gmail.com"}
                   type={"email"}
                   autoComplete={"work email"}
+                  value={formData.email} // Bind input value to state
+                  onChange={handleInputChange} // Handle input change
                   className={
                     "border border-gray-300 dark:border-gray-700 rounded-lg p-3 bg-white bg-opacity-60 dark:bg-opacity-20 dark:text-[#ffeef8]"
                   }
@@ -55,7 +107,10 @@ const Contact = () => {
               </label>
               <textarea
                 id={"message"}
+                name={"message"} // Added name attribute
                 placeholder={"Share any thoughts or feedback..."}
+                value={formData.message} // Bind textarea value to state
+                onChange={handleInputChange} // Handle input change
                 className={
                   "border border-gray-300 dark:border-gray-700 rounded-lg p-3 bg-white bg-opacity-60 dark:bg-opacity-20 dark:text-[#ffeef8] h-40"
                 }
@@ -121,33 +176,18 @@ const Contact = () => {
                   strokeLinejoin="round"
                   strokeWidth="2"
                 >
-                  <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 0 0-.94 2.58v2.87" />
-                  <path d="M9 20.027c-3 .973-5.5 0-7-3" />
+                  <path d="M16 22.027v-2.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7a5.44 5.44 0 0 0-1.5-3.75a5.07 5.07 0 0 0-.09-3.77s-1.18-.35-3.91 1.48a13.4 13.4 0 0 0-7 0c-2.73-1.83-3.91-1.48-3.91-1.48A5.07 5.07 0 0 0 5 5.797a5.44 5.44 0 0 0-1.5 3.75c0 5.45 3.3 6.65 6.44 7a3.37 3.37 0 0 0-.94 2.61v2.87" />
+                  <circle cx="12" cy="12" r="3" />
                 </g>
               </svg>
 
               <a
-                href={"https://github.com/gkishore399/"}
+                href={"https://github.com/kishoregamidi"}
                 className={"font-medium"}
               >
                 GitHub
               </a>
             </li>
-            <NavItem
-              name={"ngamidi@ufl.edu"}
-              link={"mailto:ngamidi@ufl.edu"}
-              icon={"mail"}
-            />
-            <NavItem
-              name={"+1 (352)-709-6502"}
-              link={"tel:+13527096502"}
-              icon={"call"}
-            />
-            <NavItem
-              name={"Gainesville,Florida"}
-              link={"https://maps.app.goo.gl/tnuPtfo8t3BkqgPz5"}
-              icon={"location_on"}
-            />
           </ul>
         </div>
       </div>
